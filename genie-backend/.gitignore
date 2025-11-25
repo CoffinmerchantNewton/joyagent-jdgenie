@@ -36,3 +36,4 @@ build/
 .flattened-pom.xml
 *.log
 aliyun-settings.xml
+application.yml

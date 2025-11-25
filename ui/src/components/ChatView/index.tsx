@@ -199,7 +199,7 @@ const ChatView: GenieType.FC<Props> = (props) => {
           })}
         </div>
         <GeneralInput
-          placeholder={loading ? "任务进行中" : "希望 Genie 为你做哪些任务呢？"}
+          placeholder={loading ? "任务进行中" : "希望 Wanch 为你做哪些任务呢？"}
           showBtn={false}
           size="medium"
           disabled={loading}

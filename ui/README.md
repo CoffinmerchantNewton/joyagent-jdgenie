@@ -1,6 +1,6 @@
-# Genie UI
+# Wanch UI
 
-Genie UI 是一个基于 React、TypeScript 和 Vite 的现代化项目。
+Wanch UI 是一个基于 React、TypeScript 和 Vite 的现代化项目。
 
 ## 功能特性
 
