@@ -73,11 +73,10 @@ ps 2:修改完配置后，重新build.sh,然后start.sh
 另外打开一个终端
 
 ```
-cd joyagent-jdgenie/genie-tool
-pip install uv
+conda create -n joylaw python=3.12
+pip install -r requiements.txt
 cd genie-tool
-uv sync
-source .venv/bin/activate
+bash start.sh
 ```
 首次启动需要执行
 python -m genie_tool.db.db_engine
@@ -87,21 +86,23 @@ python -m genie_tool.db.db_engine
 cp .env_template .env
 编辑.env文件, 其中需要配置SERPER_SEARCH_API_KEY，申请网址https://serper.dev/
 最后通过
-uv run python server.py 启动服务即可
+python server.py 启动服务即可
 
 
 ## Step 4: 启动mcp 服务
 
 另外打开一个终端
 cd joyagent-jdgenie/genie-client
-uv venv
-source .venv/bin/activate
-sh start.sh 即可
+conda activate joylaw
+bash start.sh 即可
 
+## Step 5: 安装并配置psql以及建表
+sudo apt install postgresql postgresql-contrib
+sudo apt install postgresql-server-dev-14
+bash script/setup_database.sh
 
-
-
-
+## Step 6: 安装minio
+docker run -d -p 9000:9000 -p 9001:9001 --name minio -e "MINIO_ROOT_USER=minioadmin" -e "MINIO_ROOT_PASSWORD=minioadmin" -v /tmp/minio:/data minio/minio:latest server /data --console-address ":9001"
 
 
 

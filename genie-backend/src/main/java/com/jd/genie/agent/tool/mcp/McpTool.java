@@ -66,7 +66,9 @@ public class McpTool implements BaseTool {
             McpToolRequest mcpToolRequest = McpToolRequest.builder()
                     .server_url(mcpServerUrl)
                     .build();
-            String response = OkHttpUtil.postJson(mcpClientUrl, JSON.toJSONString(mcpToolRequest), null, 30L);
+            // 获取该 MCP 服务器对应的请求头配置
+            Map<String, String> headers = buildHeadersWithServerKeys(genieConfig, mcpServerUrl);
+            String response = OkHttpUtil.postJson(mcpClientUrl, JSON.toJSONString(mcpToolRequest), headers, 30L);
             log.info("list tool request: {} response: {}", JSON.toJSONString(mcpToolRequest), response);
             return response;
         } catch (Exception e) {
@@ -85,12 +87,34 @@ public class McpTool implements BaseTool {
                     .server_url(mcpServerUrl)
                     .arguments(params)
                     .build();
-            String response = OkHttpUtil.postJson(mcpClientUrl, JSON.toJSONString(mcpToolRequest), null, 30L);
+            // 获取该 MCP 服务器对应的请求头配置
+            Map<String, String> headers = buildHeadersWithServerKeys(genieConfig, mcpServerUrl);
+            String response = OkHttpUtil.postJson(mcpClientUrl, JSON.toJSONString(mcpToolRequest), headers, 30L);
             log.info("call tool request: {} response: {}", JSON.toJSONString(mcpToolRequest), response);
             return response;
         } catch (Exception e) {
             log.error("{} call tool error ", agentContext.getRequestId(), e);
         }
         return "";
+    }
+
+    /**
+     * 构建包含 X-Server-Keys 的请求头
+     * genie-client 需要通过 X-Server-Keys 头部知道要转发哪些请求头到 MCP 服务器
+     */
+    private Map<String, String> buildHeadersWithServerKeys(GenieConfig genieConfig, String mcpServerUrl) {
+        Map<String, String> configuredHeaders = genieConfig.getMcpServerHeaders().get(mcpServerUrl);
+        if (configuredHeaders == null || configuredHeaders.isEmpty()) {
+            return null;
+        }
+        
+        // 创建新的 headers map，包含原始配置的 headers 和 X-Server-Keys
+        Map<String, String> headers = new java.util.HashMap<>(configuredHeaders);
+        
+        // 添加 X-Server-Keys 头部，告诉 genie-client 要转发哪些请求头
+        String serverKeys = String.join(",", configuredHeaders.keySet());
+        headers.put("X-Server-Keys", serverKeys);
+        
+        return headers;
     }
 }

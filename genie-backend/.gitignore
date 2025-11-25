@@ -34,3 +34,5 @@ build/
 .vscode/
 
 .flattened-pom.xml
+*.log
+aliyun-settings.xml

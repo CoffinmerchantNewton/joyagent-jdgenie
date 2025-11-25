@@ -22,10 +22,8 @@
 
 python 环境和依赖安装  
 ```bash
-pip install uv
-cd genie-tool
-uv sync
-source .venv/bin/activate
+conda create -n joylaw python=3.12
+pip install -r requiements.txt
 ```
 
 首次启动，需要初始化数据库（后续不再需要）
@@ -44,6 +42,6 @@ cd genie-tool
 cp .env_template .env
 # 填写环境变量
 
-uv run python server.py
+python server.py
 ```
 

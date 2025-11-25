@@ -8,6 +8,7 @@
 import json
 import os
 import time
+import datetime
 
 from fastapi import APIRouter
 from sse_starlette import ServerSentEvent, EventSourceResponse
@@ -270,4 +271,3 @@ async def post_deepsearch(
         yield ServerSentEvent(data="[DONE]")
 
     return EventSourceResponse(_stream(), ping_message_factory=lambda: ServerSentEvent(data="heartbeat"), ping=15)
-

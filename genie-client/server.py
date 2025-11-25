@@ -18,8 +18,7 @@ app = FastAPI(
     },
 )
 
-
-@app.get("/health")
+@app.get("/")
 async def health_check():
     """
     - 健康检查接口

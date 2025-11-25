@@ -4,6 +4,11 @@
 ## 业界首个开源高完成度轻量化通用多智能体产品(JoyAgent-JDGenie)
 **解决快速构建多智能体产品的最后一公里问题**
 
+## *新增特性
+使用minio存储文件，api服务在9000端口，管理界面在9001端口 账号密码都是minioadmin
+使用psql存储所有用户信息和项目信息，端口在5432，密码是服务器登陆密码
+使用ragflow的mcp服务，管理页面/API在9090，mcp在9382/sse apikey详见genie-tool/.env
+
 ## 简介
 
 当前相关开源agent主要是SDK或者框架，用户还需基于此做进一步的开发，无法直接做到开箱即用。我们开源的JoyAgent-JDGenie是端到端的多Agent产品，对于输入的query或者任务，可以直接回答或者解决。例如用户query"给我做一个最近美元和黄金的走势分析"，JoyAgent-Genie可以直接给出网页版或者PPT版的报告文档。
@@ -249,12 +254,9 @@ docker run -d -p 3000:3000 -p 8080:8080 -p 1601:1601 --name genie-app genie:late
 
 #### 环境准备
 - jdk17
-- python3.11
-- python环境准备
-  - pip install uv
-  - cd genie-tool
-  - uv sync
-  - source .venv/bin/activate
+- python3.12
+- nodejs
+- pnpm
 
 #### 方案1：手动step by step部署手册
 手动超详细攻略参考 [Step by Step](./Deploy.md)

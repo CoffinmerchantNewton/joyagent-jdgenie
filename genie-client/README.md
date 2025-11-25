@@ -3,8 +3,8 @@
 ## 安装
 
 ```bash
-uv venv
-source .venv/bin/activate
+conda create -n joylaw python=3.12 -y
+pip intall -r requirements.txt
 ```
 
 ## API 文档

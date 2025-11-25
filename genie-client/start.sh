@@ -1,3 +1,3 @@
 #!/bin/bash
 
-uv run server.py
+python server.py

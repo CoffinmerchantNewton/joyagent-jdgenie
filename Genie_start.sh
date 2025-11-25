@@ -115,14 +115,7 @@ init_setup() {
     echo -e "${BLUE}🗄️  初始化工具服务数据库...${NC}"
     cd genie-tool
     
-    # 检查虚拟环境
-    if [ ! -d ".venv" ]; then
-        echo -e "${BLUE}创建Python虚拟环境...${NC}"
-        uv sync
-    fi
-    
-    # 激活虚拟环境并初始化数据库
-    source .venv/bin/activate
+    # 初始化数据库
     echo -e "${BLUE}初始化数据库...${NC}"
     if python -m genie_tool.db.db_engine; then
         echo -e "${GREEN}✅ 数据库初始化成功${NC}"
@@ -133,15 +126,9 @@ init_setup() {
     fi
     cd ..
     
-    # 3. MCP客户端虚拟环境创建
-    echo -e "${BLUE}🔌 创建MCP客户端虚拟环境...${NC}"
+    # 3. MCP客户端检查
+    echo -e "${BLUE}🔌 检查MCP客户端...${NC}"
     cd genie-client
-    
-    # 检查虚拟环境
-    if [ ! -d ".venv" ]; then
-        echo -e "${BLUE}创建Python虚拟环境...${NC}"
-        uv venv
-    fi
     cd ..
     
     echo -e "${GREEN}✅ 初始化设置完成${NC}"
@@ -186,15 +173,6 @@ start_tool_service() {
     echo -e "${BLUE}🛠️  启动工具服务...${NC}"
     cd genie-tool
     
-    # 检查虚拟环境
-    if [ ! -d ".venv" ]; then
-        echo -e "${BLUE}创建Python虚拟环境...${NC}"
-        uv sync
-    fi
-    
-    # 激活虚拟环境并启动
-    source .venv/bin/activate
-    
     # 启动服务
     if [ -f "start.sh" ]; then
         sh start.sh &
@@ -212,15 +190,6 @@ start_tool_service() {
 start_mcp_client() {
     echo -e "${BLUE}🔌 启动MCP客户端服务...${NC}"
     cd genie-client
-    
-    # 检查虚拟环境
-    if [ ! -d ".venv" ]; then
-        echo -e "${BLUE}创建Python虚拟环境...${NC}"
-        uv venv
-    fi
-    
-    # 激活虚拟环境并启动
-    source .venv/bin/activate
     
     if [ -f "start.sh" ]; then
         sh start.sh &
@@ -367,7 +336,6 @@ show_service_info() {
     echo -e "${YELLOW}💡 提示：${NC}"
     echo -e "  - 使用 Ctrl+C 停止所有服务"
     echo -e "  - 查看日志: tail -f genie-backend/genie-backend_startup.log"
-    echo -e "  - 重新启动: ./start_genie_one_click.sh"
     echo "=================================="
 }
 

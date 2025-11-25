@@ -66,6 +66,22 @@ public class GenieConfig {
         reactNextStepPromptMap = JSONObject.parseObject(list, new TypeReference<Map<String, String>>() {
         });
     }
+    
+        /**
+     * MCP 服务器请求头配置
+     * 格式: {"server_url": {"header_name": "header_value"}}
+     */
+    private Map<String, Map<String, String>> mcpServerHeaders = new HashMap<>();
+    @Value("${autobots.autoagent.mcp_server_headers:{}}")
+    public void setMcpServerHeaders(String jsonStr) {
+        try {
+            this.mcpServerHeaders = JSON.parseObject(jsonStr, new TypeReference<Map<String, Map<String, String>>>() {
+            });
+        } catch (Exception e) {
+            log.warn("解析 mcp_server_headers 配置失败，将使用空配置: {}", e.getMessage());
+            this.mcpServerHeaders = new HashMap<>();
+        }
+    }
 
     @Value("${autobots.autoagent.planner.model_name:gpt-4o-0806}")
     private String plannerModelName;

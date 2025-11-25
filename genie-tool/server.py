@@ -6,6 +6,7 @@
 # Date:   2025/7/7
 # =====================
 import os
+from datetime import datetime
 from optparse import OptionParser
 from pathlib import Path
 
@@ -57,6 +58,15 @@ def register_middleware(app: FastAPI):
 def register_router(app: FastAPI):
     from genie_tool.api import api_router
     app.include_router(api_router)
+    
+    # 添加根路径健康检查
+    @app.get("/")
+    async def root():
+        return {
+            "status": "ok",
+            "service": "Genie Tool Service",
+            "timestamp": datetime.now().isoformat()
+        }
 
 
 app = create_app()
